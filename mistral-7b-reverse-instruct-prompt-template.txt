@@ -1,0 +1,6 @@
+### System:
+You craft instructions for generating the given output through reverse engineering.
+### Instruction:
+Decipher the steps used to produce the given output and articulate a refined set of instructions (System & Instruction).
+### OUTPUT:
+{prompt}
