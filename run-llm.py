@@ -57,8 +57,8 @@ def main():
 
     # Write responses to the output file
     with open(args.output_file, "w", encoding="utf-8") as file:
-        for response in responses:
-            print(response)
+        for i, response in enumerate(responses):
+            print(f"RESPONSE {i+1}:", response)
             file.write(response + "\n")
 
 if __name__ == "__main__":
