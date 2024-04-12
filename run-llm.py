@@ -49,8 +49,9 @@ def main():
         responses.extend(batch_responses)
 
     # Write responses to the output file
-    with open(args.output_file, "w") as file:
+    with open(args.output_file, "w", encoding="utf-8") as file:
         for response in responses:
+            print(response)
             file.write(response + "\n")
 
 if __name__ == "__main__":
