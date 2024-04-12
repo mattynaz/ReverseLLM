@@ -1,6 +1,6 @@
 import argparse
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer
 
 def main():
     # Set up argument parser
@@ -8,13 +8,15 @@ def main():
     parser.add_argument('--prompts_file', type=str, required=True, help='File to read prompts from.')
     parser.add_argument('--output_file', type=str, required=True, help='File to append the responses to.')
     parser.add_argument('--model_name', type=str, required=True, help='Name of model.')
+    parser.add_argument('--config_path', type=str, default="/", help='Path to config.')
     parser.add_argument('--prompt_template_file', type=str, help='File with template for prompt.')
     args = parser.parse_args()
 
     # Load model and tokenizer
     model_name = args.model_name
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = AutoModelForCausalLM.from_pretrained(model_name)
+    config = AutoConfig.from_pretrained(args.config_path)
+    tokenizer = AutoTokenizer.from_pretrained(model_name, config=config)
+    model = AutoModelForCausalLM.from_pretrained(model_name, config=config)
 
     # Ensure the model is in evaluation mode
     model.eval()
