@@ -8,13 +8,14 @@ def main():
     parser.add_argument('--prompts_file', type=str, required=True, help='File to read prompts from.')
     parser.add_argument('--output_file', type=str, required=True, help='File to append the responses to.')
     parser.add_argument('--model_name', type=str, required=True, help='Name of model.')
+    parser.add_argument('--tokenizer_name', type=str, help='Name of model.')
     parser.add_argument('--config_path', type=str, help='Path to config.')
     parser.add_argument('--prompt_template_file', type=str, help='File with template for prompt.')
     args = parser.parse_args()
 
     # Load model and tokenizer
     config = AutoConfig.from_pretrained(args.config_path or args.model_name)
-    tokenizer = AutoTokenizer.from_pretrained(args.model_name, config=config)
+    tokenizer = AutoTokenizer.from_pretrained(args.tokenizer_name or args.model_name)
     model = AutoModelForCausalLM.from_pretrained(args.model_name, config=config)
 
     # Ensure the model is in evaluation mode
