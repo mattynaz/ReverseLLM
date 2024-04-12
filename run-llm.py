@@ -14,9 +14,10 @@ def main():
 
     # Load model and tokenizer
     model_name = args.model_name
-    config = AutoConfig.from_pretrained(args.config_path)
-    tokenizer = AutoTokenizer.from_pretrained(model_name, config=config)
-    model = AutoModelForCausalLM.from_pretrained(model_name, config=config)
+    print(model_name, args.config_path)
+    config = AutoConfig.from_pretrained(args.config_path, local_files_only=True)
+    tokenizer = AutoTokenizer.from_pretrained(model_name, config=config, local_files_only=True)
+    model = AutoModelForCausalLM.from_pretrained(model_name, config=config, local_files_only=True)
 
     # Ensure the model is in evaluation mode
     model.eval()
