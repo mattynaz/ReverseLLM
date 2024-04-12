@@ -9,7 +9,7 @@
 python run-llm.py \
     --prompts_file "prompts.txt" \
     --output_file "vikp_reverse_instruct-responses.txt" \
-    --model_name "Philipp-Sc/mistral-7b-reverse-instruct" \
+    --model_name "vikp/reverse_instruct" \
     --prompt_template_file "vikp_reverse_instruct-prompt-template.txt"
 
 
