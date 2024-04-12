@@ -43,10 +43,11 @@ def main():
     responses = []
     for i in range(0, len(prompts), batch_size):
         batch_prompts = prompts[i:i+batch_size]
-        inputs = tokenizer(batch_prompts, return_tensors="pt", padding=True, truncation=True, return_token_type_ids=False)
+        inputs = tokenizer(batch_prompts, return_tensors="pt", padding=True, return_token_type_ids=False)
         inputs = inputs.to(device)
         if args.flip_tokens:
             inputs['input_ids'] = inputs['input_ids'].flip((-1,))
+            inputs['attention_mask'] = inputs['attention_mask'].flip((-1,))
         with torch.no_grad():
             outputs = model.generate(**inputs, max_new_tokens=150, num_return_sequences=1)
         if args.flip_tokens:
