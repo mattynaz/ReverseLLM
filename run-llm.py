@@ -16,8 +16,9 @@ def main():
     # Load model and tokenizer
     config = AutoConfig.from_pretrained(args.config_path or args.model_name)
     tokenizer = AutoTokenizer.from_pretrained(args.tokenizer_name or args.model_name)
+    tokenizer.pad_token = tokenizer.eos_token
     model = AutoModelForCausalLM.from_pretrained(args.model_name, config=config)
-
+    
     # Ensure the model is in evaluation mode
     model.eval()
 
