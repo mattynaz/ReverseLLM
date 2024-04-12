@@ -42,7 +42,7 @@ def main():
     responses = []
     for i in range(0, len(prompts), batch_size):
         batch_prompts = prompts[i:i+batch_size]
-        inputs = tokenizer(batch_prompts, return_tensors="pt", padding=True, truncation=True, max_length=128)
+        inputs = tokenizer(batch_prompts, return_tensors="pt", padding=True, truncation=True, return_token_type_ids=False, max_length=128)
         inputs = inputs.to(device)
         with torch.no_grad():
             outputs = model.generate(**inputs, max_new_tokens=150, num_return_sequences=1)
