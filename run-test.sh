@@ -17,7 +17,7 @@ python run-llm.py \
     --output_file "reverse-pythia-160m-responses.txt" \
     --model_name "afterless/reverse-pythia-160m"
 
-python run-llm.py \
-    --prompts_file "reverse-pythia-160m-responses.txt" \
-    --output_file "llama-2-7b-chat-hf-responses.txt" \
-    --model_name "meta-llama/Llama-2-7b-chat-hf" \
+# python run-llm.py \
+#     --prompts_file "reverse-pythia-160m-responses.txt" \
+#     --output_file "llama-2-7b-chat-hf-responses.txt" \
+#     --model_name "meta-llama/Llama-2-7b-chat-hf" \
