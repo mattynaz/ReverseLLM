@@ -11,6 +11,7 @@ def main():
     parser.add_argument('--tokenizer_name', type=str, help='Name of model.')
     parser.add_argument('--config_path', type=str, help='Path to config.')
     parser.add_argument('--prompt_template_file', type=str, help='File with template for prompt.')
+    parser.add_argument('--flip_tokens', action='store_true', help='Flip tokens before and after model.')
     args = parser.parse_args()
 
     # Load model and tokenizer
@@ -21,11 +22,11 @@ def main():
     model = AutoModelForCausalLM.from_pretrained(args.model_name, config=config)
     
     # Ensure the model is in evaluation mode
-    model.eval()
+    model = model.eval()
 
     # Move model to GPU if available
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model.to(device)
+    model = model.to(device)
 
     # Read prompts from the input file
     with open(args.prompts_file, 'r') as file:
@@ -42,10 +43,14 @@ def main():
     responses = []
     for i in range(0, len(prompts), batch_size):
         batch_prompts = prompts[i:i+batch_size]
-        inputs = tokenizer(batch_prompts, return_tensors="pt", padding=True, truncation=True, return_token_type_ids=False, max_length=128)
+        inputs = tokenizer(batch_prompts, return_tensors="pt", padding=True, truncation=True, return_token_type_ids=False)
         inputs = inputs.to(device)
+        if args.flip_tokens:
+            inputs['input_ids'] = inputs['input_ids'].flip((-1,))
         with torch.no_grad():
             outputs = model.generate(**inputs, max_new_tokens=150, num_return_sequences=1)
+        if args.flip_tokens:
+            outputs = outputs.flip((-1,))
         batch_responses = tokenizer.batch_decode(outputs, skip_special_tokens=True)
         responses.extend(batch_responses)
 

@@ -15,7 +15,8 @@
 python run-llm.py \
     --prompts_file "prompts.txt" \
     --output_file "reverse-pythia-160m-responses.txt" \
-    --model_name "afterless/reverse-pythia-160m"
+    --model_name "afterless/reverse-pythia-160m" \
+    --flip_tokens
 
 # python run-llm.py \
 #     --prompts_file "reverse-pythia-160m-responses.txt" \
